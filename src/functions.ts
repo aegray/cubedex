@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { Alg } from "cubing/alg";
 import { experimentalCountMovesETM } from "cubing/notation";
 import { faceletsToPattern } from "./utils";
-import { fullStickeringEnabled } from "./index";
+import { fullStickeringEnabled, f2lCornerOnlyBottom } from "./index";
 import { makeTimeFromTimestamp } from 'gan-web-bluetooth';
 import { Chart, registerables } from 'chart.js';
 
@@ -297,8 +297,14 @@ export function setStickering(category: string): string {
         twistyPlayer.experimentalStickering = 'full';
         return 'full';
     }
+   
+    if (category.toLowerCase().startsWith('f2l') && f2lCornerOnlyBottom)
+    {
+        twistyPlayer.experimentalStickering = 'F2LCornerOnlyBottom';
+        return 'F2LCornerOnlyBottom';
+    }
 
-    const validStickering = ['EOcross', 'LSOCLL', 'EOline', 'LSOLL', 'Daisy', 'Cross', 'ZBLS', 'ZBLL', 'WVLS', 'OCLL', 'L6EO', 'L10P', 'EPLL', 'EOLL', 'CPLL', 'COLL', 'CMLL', 'VLS', 'PLL', 'OLL', 'L6E', 'F2L', 'ELS', 'ELL', 'CLS', 'CLL', 'LS', 'LL', 'EO'];
+    const validStickering = ['EOcross', 'LSOCLL', 'EOline', 'LSOLL', 'Daisy', 'Cross', 'ZBLS', 'ZBLL', 'WVLS', 'OCLL', 'L6EO', 'L10P', 'EPLL', 'EOLL', 'CPLL', 'COLL', 'CMLL', 'VLS', 'PLL', 'OLL', 'L6E', 'F2L', 'F2LCornerOnlyBottom', 'ELS', 'ELL', 'CLS', 'CLL', 'LS', 'LL', 'EO'];
 
     let matchedStickering: string | undefined;
     // Loop through validStickering to find a match

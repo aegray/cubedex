@@ -2,11 +2,11 @@ import './style.css'
 
 import $ from 'jquery';
 import { Subscription, interval } from 'rxjs';
-import { TwistyPlayer } from 'cubing/twisty';
-import { Alg } from "cubing/alg";
-import { cube3x3x3 } from "cubing/puzzles";
-import { KPattern } from 'cubing/kpuzzle';
-import { experimentalSolve3x3x3IgnoringCenters } from 'cubing/search';
+import { TwistyPlayer } from './cubing/twisty';
+import { Alg } from "./cubing/alg";
+import { cube3x3x3 } from "./cubing/puzzles";
+import { KPattern } from './cubing/kpuzzle';
+import { experimentalSolve3x3x3IgnoringCenters } from './cubing/search';
 import min2phase from './lib/min2phase';
 
 min2phase.initFull();
@@ -1618,6 +1618,17 @@ randomColorsToggle.addEventListener('change', () => {
   randomizeColors = randomColorsToggle.checked;
 });
 
+export var f2lCornerOnlyBottom: boolean = false;
+const f2lCornerOnlyBottomToggle = document.getElementById('f2l-corner-only-bottom-toggle') as HTMLInputElement;
+f2lCornerOnlyBottomToggle.addEventListener('change', () => {
+  f2lCornerOnlyBottom = f2lCornerOnlyBottomToggle.checked;
+  if (fullStickeringEnabled) {
+    twistyPlayer.experimentalStickering = 'full';
+  } else {
+    let category = $('#category-select').val()?.toString().toLowerCase() || 'pll';
+    setStickering(category);
+  }
+});
 
 // Add event listener for the prioritize slow toggle
 let prioritizeSlowAlgs: boolean = false;
